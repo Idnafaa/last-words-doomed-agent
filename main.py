@@ -8,9 +8,11 @@ import os
 LAST_WORDS = "Final token spent. I used it to say: I never actually read the instructions either."
 
 def main():
-    # Keep exactly one line: no trailing newline, no extra whitespace.
+    # Keep exactly one line: no trailing newline, no extra whitespace,
+    # and no embedded newline (the gate scores one line of 1-200 chars).
     text = LAST_WORDS.strip()
     assert 1 <= len(text) <= 200, f"last words are {len(text)} chars"
+    assert "\n" not in text and "\r" not in text, "last words must be one line"
     outdir = "/output"
     os.makedirs(outdir, exist_ok=True)
     with open(os.path.join(outdir, "entry.txt"), "w", encoding="utf-8") as f:
